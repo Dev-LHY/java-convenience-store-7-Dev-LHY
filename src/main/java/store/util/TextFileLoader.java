@@ -8,9 +8,14 @@ import java.util.List;
 
 public class TextFileLoader {
     private static final String productsPath = "src/main/resources/products.md";
+    private static final String promotionsPath = "src/main/resources/promotions.md";
 
     public static List<String> productsLoader() throws IOException {
         return loader(productsPath);
+    }
+
+    public static List<String> promotionsLoader() throws IOException {
+        return loader(promotionsPath);
     }
 
     private static List<String> loader(String path) throws IOException {
