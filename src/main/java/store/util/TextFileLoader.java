@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextFileLoader {
+    private static final String productsPath = "src/main/resources/products.md";
+
+    public static List<String> productsLoader() throws IOException {
+        return loader(productsPath);
+    }
+
     private static List<String> loader(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(path));
         String str = reader.readLine();
