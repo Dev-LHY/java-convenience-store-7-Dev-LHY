@@ -33,6 +33,10 @@ public class StockManager {
         return getQuantityByNameAndPromotionStatus(name, true);
     }
 
+    public int getNonePromotionQuantityByName(String name) {
+        return getQuantityByNameAndPromotionStatus(name, false);
+    }
+
     private int getQuantityByNameAndPromotionStatus(String name, boolean checkPromotion) {
         List<Product> products = stock.get(name);
         for (Product product : products) {
