@@ -20,6 +20,26 @@ public class StockManager {
         return stock;
     }
 
+    public int getTotalQuantityByName(String name) {
+        List<Product> products = stock.get(name);
+        int totalQuantity = 0;
+        for (Product product : products) {
+            totalQuantity += product.getQuantity();
+        }
+        return totalQuantity;
+    }
+
+    private int getQuantityByNameAndPromotionStatus(String name, boolean checkPromotion) {
+        List<Product> products = stock.get(name);
+        for (Product product : products) {
+            boolean hasPromotion = product.getPromotion() != null;
+            if (checkPromotion == hasPromotion) {
+                return product.getQuantity();
+            }
+        }
+        return 0;
+    }
+
     public void addAllProducts(List<Product> products) {
         for (Product product : products) {
             addProduct(product);
