@@ -20,6 +20,16 @@ public class StockManager {
         return stock;
     }
 
+    public void addAllProducts(List<Product> products) {
+        for (Product product : products) {
+            addProduct(product);
+        }
+
+        for (Map.Entry<String, List<Product>> stockEntry : stock.entrySet()) {
+            addNullPromotionProductIfRequired(stockEntry.getValue());
+        }
+    }
+
     private void addProduct(Product product) {
         String key = product.getName();
         List<Product> classifiedProducts = stock.computeIfAbsent(key, k -> new ArrayList<>());
