@@ -25,4 +25,17 @@ public class StockManager {
         List<Product> classifiedProducts = stock.computeIfAbsent(key, k -> new ArrayList<>());
         classifiedProducts.add(product);
     }
+
+    private void addNullPromotionProductIfRequired(List<Product> classifiedProducts) {
+        boolean hasOneProduct = classifiedProducts.size() == 1;
+        boolean hasPromotion = classifiedProducts.getFirst().getPromotion() != null;
+
+        if (hasOneProduct && hasPromotion) {
+            String name = classifiedProducts.getFirst().getName();
+            int price = classifiedProducts.getFirst().getPrice();
+            int quantity = 0;
+            String promotion = null;
+            classifiedProducts.add(new Product(name, price, quantity, promotion));
+        }
+    }
 }
