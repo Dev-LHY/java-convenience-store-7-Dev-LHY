@@ -29,6 +29,10 @@ public class StockManager {
         return totalQuantity;
     }
 
+    public int getPromotionQuantityByName(String name) {
+        return getQuantityByNameAndPromotionStatus(name, true);
+    }
+
     private int getQuantityByNameAndPromotionStatus(String name, boolean checkPromotion) {
         List<Product> products = stock.get(name);
         for (Product product : products) {
