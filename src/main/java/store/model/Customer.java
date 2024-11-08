@@ -12,11 +12,16 @@ public class Customer {
     private static final String DELIMITER_DASH = "-";
     private static final int NAME_INDEX = 0;
     private static final int QUANTITY_INDEX = 1;
+    private static final int PROMOTION_BENEFIT = 1;
 
     private final Map<String, Integer> shoppingCart = new LinkedHashMap<>();
 
     public Customer(String items) {
         putItemsToShoppingCart(items);
+    }
+
+    public void addQuantity(String name) {
+        shoppingCart.put(name, shoppingCart.get(name) + PROMOTION_BENEFIT);
     }
 
     public Map<String, Integer> getShoppingCart() {
