@@ -9,11 +9,24 @@ import java.util.regex.Pattern;
 
 public class Customer {
     private static final String REGEX = "\\[(.*?)]";
+    private static final String DELIMITER_DASH = "-";
+    private static final int NAME_INDEX = 0;
+    private static final int QUANTITY_INDEX = 1;
 
     private final Map<String, Integer> shoppingCart = new LinkedHashMap<>();
 
     public Map<String, Integer> getShoppingCart() {
         return shoppingCart;
+    }
+
+    private void putItemsToShoppingCart(String items) {
+        List<String> parseItems = parseItems(items);
+        for (String item : parseItems) {
+            String[] splitItem = item.split(DELIMITER_DASH);
+            String name = splitItem[NAME_INDEX];
+            int quantity = Integer.parseInt(splitItem[QUANTITY_INDEX]);
+            shoppingCart.put(name, quantity);
+        }
     }
 
     private List<String> parseItems(String items) {
