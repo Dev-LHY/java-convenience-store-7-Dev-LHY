@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class StockManager {
     private static final StockManager stockManager = new StockManager();
+    private static final int OUT_OF_STOCK = 0;
     private final Map<String, List<Product>> stock = new LinkedHashMap<>();
 
     private StockManager() {
@@ -18,6 +19,24 @@ public class StockManager {
 
     public Map<String, List<Product>> getStock() {
         return stock;
+    }
+
+    public void updateQuantity(Map.Entry<String, Integer> shoppingCartEntry) {
+        List<Product> products = stock.get(shoppingCartEntry.getKey());
+        int shoppingCartQuantity = shoppingCartEntry.getValue();
+        reduceQuantity(products, shoppingCartQuantity);
+    }
+
+    private void reduceQuantity(List<Product> products, int shoppingCartQuantity) {
+        for (Product product : products) {
+            int productQuantity = product.getQuantity();
+            if (productQuantity >= shoppingCartQuantity) {
+                product.setQuantity(product.getQuantity() - productQuantity);
+                break;
+            }
+            shoppingCartQuantity -= product.getQuantity();
+            product.setQuantity(OUT_OF_STOCK);
+        }
     }
 
     public int getTotalQuantityByName(String name) {
