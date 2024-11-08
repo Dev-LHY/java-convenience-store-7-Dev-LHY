@@ -95,4 +95,11 @@ public class StockManager {
             classifiedProducts.add(new Product(name, price, quantity, promotion));
         }
     }
+
+    @Override
+    public String toString() {
+        return "StockManager{" +
+                "stock=" + stock +
+                '}';
+    }
 }
