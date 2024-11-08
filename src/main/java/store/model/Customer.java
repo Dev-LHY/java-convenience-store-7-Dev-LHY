@@ -15,6 +15,10 @@ public class Customer {
 
     private final Map<String, Integer> shoppingCart = new LinkedHashMap<>();
 
+    public Customer(String items) {
+        putItemsToShoppingCart(items);
+    }
+
     public Map<String, Integer> getShoppingCart() {
         return shoppingCart;
     }
