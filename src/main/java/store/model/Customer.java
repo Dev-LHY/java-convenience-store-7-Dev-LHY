@@ -24,6 +24,10 @@ public class Customer {
         shoppingCart.put(name, shoppingCart.get(name) + PROMOTION_BENEFIT);
     }
 
+    public void reduceQuantity(String name, int quantity) {
+        shoppingCart.put(name, shoppingCart.get(name) - quantity);
+    }
+
     public Map<String, Integer> getShoppingCart() {
         return shoppingCart;
     }
