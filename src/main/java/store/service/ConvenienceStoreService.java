@@ -24,6 +24,7 @@ public class ConvenienceStoreService {
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
     private final Map<String, Integer> promotionDiscount = new LinkedHashMap<>();
+    private int membershipDiscount;
 
     public ConvenienceStoreService(Customer customer) {
         this.stockManager = StockManager.getInstance();
@@ -52,6 +53,27 @@ public class ConvenienceStoreService {
             totalAmount = ProductPrice.getPriceByName(promotionDiscountEntry.getKey()) * promotionDiscountEntry.getValue();
         }
         return totalAmount;
+    }
+
+    public void askMembership(boolean isMembership) {
+        if (isMembership) {
+            List<Integer> totalAmount = getPurchaseInformation();
+            int promotionDiscountAmount = getPromotionDiscountAmount();
+            this.membershipDiscount =  (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.7);
+        }
+        if (isMembership) {
+            this.membershipDiscount = 0;
+        }
+    }
+
+    public int getMembershipDiscountAmount() {
+        return membershipDiscount;
+    }
+
+    public int getActualAmount() {
+        List<Integer> totalAmount = getPurchaseInformation();
+        int promotionDiscountAmount = getPromotionDiscountAmount();
+        this.membershipDiscount =  totalAmount.get(1) - promotionDiscountAmount;
     }
 
     public Map<String, Integer> getPromotionDiscount() {
