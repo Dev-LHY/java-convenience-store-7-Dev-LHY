@@ -59,7 +59,7 @@ public class ConvenienceStoreService {
         if (isMembership) {
             List<Integer> totalAmount = getPurchaseInformation();
             int promotionDiscountAmount = getPromotionDiscountAmount();
-            this.membershipDiscount =  (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.7);
+            this.membershipDiscount =  (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.3);
         }
         if (!isMembership) {
             this.membershipDiscount = 0;
