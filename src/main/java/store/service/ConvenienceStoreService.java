@@ -61,7 +61,7 @@ public class ConvenienceStoreService {
             int promotionDiscountAmount = getPromotionDiscountAmount();
             this.membershipDiscount =  (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.7);
         }
-        if (isMembership) {
+        if (!isMembership) {
             this.membershipDiscount = 0;
         }
     }
@@ -75,8 +75,7 @@ public class ConvenienceStoreService {
 
     public int getActualAmount() {
         List<Integer> totalAmount = getPurchaseInformation();
-        int promotionDiscountAmount = getPromotionDiscountAmount();
-        this.membershipDiscount =  totalAmount.get(1) - promotionDiscountAmount;
+        return totalAmount.get(1) - getMembershipDiscountAmount() - getPromotionDiscountAmount();
     }
 
     public Map<String, Integer> getPromotionDiscount() {
