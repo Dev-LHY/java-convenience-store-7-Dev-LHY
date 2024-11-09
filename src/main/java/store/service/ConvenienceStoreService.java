@@ -50,7 +50,7 @@ public class ConvenienceStoreService {
         int totalAmount = 0;
         Map<String, Integer> promotionDiscount = getPromotionDiscount();
         for (Map.Entry<String, Integer> promotionDiscountEntry : promotionDiscount.entrySet()) {
-            totalAmount = ProductPrice.getPriceByName(promotionDiscountEntry.getKey()) * promotionDiscountEntry.getValue();
+            totalAmount += ProductPrice.getPriceByName(promotionDiscountEntry.getKey()) * promotionDiscountEntry.getValue();
         }
         return totalAmount;
     }
