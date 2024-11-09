@@ -2,6 +2,7 @@ package store.service;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,12 +21,17 @@ public class ConvenienceStoreService {
     private final Map<String, Promotion> promotions;
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
+    private final Map<String, Integer> promotionDiscount = new LinkedHashMap<>();
 
     public ConvenienceStoreService(Customer customer) {
         this.stockManager = StockManager.getInstance();
         this.customer = customer;
         this.shoppingCart = customer.getShoppingCart();
         this.promotions = stockManager.getPromotions();
+    }
+
+    public Map<String, Integer> getPromotionDiscount() {
+        return promotionDiscount;
     }
 
     public void checkQuantity() {
@@ -63,10 +69,6 @@ public class ConvenienceStoreService {
     private boolean checkPromotionTime(LocalDate startDate, LocalDate endDate) {
         LocalDate todayDate = DateTimes.now().toLocalDate();
         return todayDate.isBefore(startDate) || todayDate.isAfter(endDate);
-    }
-
-    public void createReceipt(boolean isMembership) {
-
     }
 
     private void plusQuantity(Entry<String, Integer> shoppingCart, int promotionQuantity, List<Product> products) {
@@ -119,8 +121,10 @@ public class ConvenienceStoreService {
     private int setRemainder(Entry<String, Integer> shoppingCart, int promotionQuantity, int normalQuantity,
                              int divide) {
         if (normalQuantity >= 0) {
+            promotionDiscount.put(shoppingCart.getKey(), shoppingCart.getValue()/divide);
             return shoppingCart.getValue() % divide;
         }
+        promotionDiscount.put(shoppingCart.getKey(), promotionQuantity/divide);
         int i = promotionQuantity % divide;
         return (normalQuantity * -1) + i;
     }
