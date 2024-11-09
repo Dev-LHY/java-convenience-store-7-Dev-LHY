@@ -9,6 +9,7 @@ public class StockManager {
     private static final StockManager stockManager = new StockManager();
     private static final int OUT_OF_STOCK = 0;
     private final Map<String, List<Product>> stock = new LinkedHashMap<>();
+    private final Map<String, Promotion> promotions = new LinkedHashMap<>();
 
     private StockManager() {
     }
@@ -19,6 +20,16 @@ public class StockManager {
 
     public Map<String, List<Product>> getStock() {
         return stock;
+    }
+
+    public Map<String, Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void addAllPromotions(List<Promotion> promotions) {
+        for (Promotion promotion : promotions) {
+            this.promotions.put(promotion.getName(), promotion);
+        }
     }
 
     public void updateQuantity(Map.Entry<String, Integer> shoppingCartEntry) {
