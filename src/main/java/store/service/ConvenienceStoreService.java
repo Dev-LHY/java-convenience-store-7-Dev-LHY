@@ -67,6 +67,9 @@ public class ConvenienceStoreService {
     }
 
     public int getMembershipDiscountAmount() {
+        if (membershipDiscount > 8000) {
+            this.membershipDiscount = 8000;
+        }
         return membershipDiscount;
     }
 
