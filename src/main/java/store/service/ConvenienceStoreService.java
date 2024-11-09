@@ -2,6 +2,7 @@ package store.service;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map.Entry;
 import store.exception.ExceptionMessage;
 import store.model.Customer;
 import store.model.Product;
+import store.model.ProductPrice;
 import store.model.Promotion;
 import store.model.StockManager;
 import store.view.InputView;
@@ -28,6 +30,19 @@ public class ConvenienceStoreService {
         this.customer = customer;
         this.shoppingCart = customer.getShoppingCart();
         this.promotions = stockManager.getPromotions();
+    }
+
+    public List<Integer> getPurchaseInformation() {
+        List<Integer> purchaseInformation = new ArrayList<>();
+        int totalQuantity = 0;
+        int totalAmount = 0;
+        for (Entry<String, Integer> shoppingCartEntry : shoppingCart.entrySet()) {
+            totalQuantity += shoppingCartEntry.getValue();
+            totalAmount += ProductPrice.getPriceByName(shoppingCartEntry.getKey()) * shoppingCartEntry.getValue();
+        }
+        purchaseInformation.add(totalQuantity);
+        purchaseInformation.add(totalAmount);
+        return purchaseInformation;
     }
 
     public Map<String, Integer> getPromotionDiscount() {
@@ -121,10 +136,10 @@ public class ConvenienceStoreService {
     private int setRemainder(Entry<String, Integer> shoppingCart, int promotionQuantity, int normalQuantity,
                              int divide) {
         if (normalQuantity >= 0) {
-            promotionDiscount.put(shoppingCart.getKey(), shoppingCart.getValue()/divide);
+            promotionDiscount.put(shoppingCart.getKey(), shoppingCart.getValue() / divide);
             return shoppingCart.getValue() % divide;
         }
-        promotionDiscount.put(shoppingCart.getKey(), promotionQuantity/divide);
+        promotionDiscount.put(shoppingCart.getKey(), promotionQuantity / divide);
         int i = promotionQuantity % divide;
         return (normalQuantity * -1) + i;
     }
