@@ -16,6 +16,17 @@ public class ConvenienceStoreController {
     private final InputView inputView = new InputView();
     private final StockManager stockManager = StockManager.getInstance();
 
+    public void run() {
+        initialize();
+        while (true) {
+            welcome();
+            retryIfErrorOccur(this::process);
+            if (repurchase()) {
+                return;
+            }
+        }
+    }
+
     private void initialize() {
         try {
             List<Product> products = Product.createProducts(TextFileLoader.productsLoader());
