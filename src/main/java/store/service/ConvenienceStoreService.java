@@ -128,7 +128,7 @@ public class ConvenienceStoreService {
     }
 
     private void askPlusQuantity(Entry<String, Integer> shoppingCart, int result, int divide) {
-        if (result == divide - 1 && shoppingCart.getValue() % divide != 0) {
+        if (shoppingCart.getValue() % divide == divide -1) {
             outputView.addPromotionProduct(shoppingCart.getKey(), 1);
             if (inputView.isY()) {
                 customer.addQuantity(shoppingCart.getKey());
