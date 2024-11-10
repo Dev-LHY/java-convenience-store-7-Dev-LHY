@@ -33,6 +33,12 @@ public class ConvenienceStoreService {
         this.promotions = stockManager.getPromotions();
     }
 
+    public void updateStock() {
+        for (Entry<String, Integer> shoppincCartEntry : shoppingCart.entrySet()) {
+            stockManager.updateQuantity(shoppincCartEntry);
+        }
+    }
+
     public List<Integer> getPurchaseInformation() {
         List<Integer> purchaseInformation = new ArrayList<>();
         int totalQuantity = 0;
