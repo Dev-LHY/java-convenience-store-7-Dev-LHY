@@ -53,6 +53,18 @@ public class ConvenienceStoreController {
         outputView.memberShipDiscount(csService.getMembershipDiscountAmount());
         outputView.actualAmount(csService.getActualAmount());
     }
+
+    private void retryIfErrorOccur(Runnable action) {
+        while (true) {
+            try {
+                action.run();
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
 
 
