@@ -1,6 +1,7 @@
 package store.controller;
 
 import java.util.List;
+import java.util.Map;
 import store.model.Product;
 import store.model.Promotion;
 import store.model.StockManager;
@@ -22,6 +23,12 @@ public class ConvenienceStoreController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void welcome() {
+        outputView.welcome();
+        Map<String, List<Product>> stock = stockManager.getStock();
+        outputView.stock(stock);
     }
 }
 
