@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import store.exception.ExceptionMessage;
 
 public class StockManager {
     private static final StockManager stockManager = new StockManager();
@@ -51,11 +52,16 @@ public class StockManager {
     }
 
     public int getTotalQuantityByName(String name) {
-        List<Product> products = stock.get(name);
         int totalQuantity = 0;
-        for (Product product : products) {
-            totalQuantity += product.getQuantity();
+        try {
+            List<Product> products = stock.get(name);
+            for (Product product : products) {
+                totalQuantity += product.getQuantity();
+            }
+        } catch (NullPointerException e) {
+            System.out.println(ExceptionMessage.INVALID_INPUT.getMessage());
         }
+
         return totalQuantity;
     }
 
