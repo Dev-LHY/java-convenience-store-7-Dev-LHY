@@ -94,14 +94,16 @@ public class ConvenienceStoreService {
 
     public void validatePromotion() {
         Map<String, List<Product>> stock = stockManager.getStock();
-        String promotionName = null;
         for (Map.Entry<String, Integer> shoppingCart : shoppingCart.entrySet()) {
             List<Product> products = stock.get(shoppingCart.getKey());
             Promotion promotion = promotions.get(products.getFirst().getPromotion());
-            if (checkPromotionTime(promotion.getStart_date(), promotion.getEnd_date())) {
+            if (promotion == null) {
                 continue;
             }
-            validatePromotions(shoppingCart, products, promotionName);
+            if (checkPromotionTime(promotion.getStart_date(), promotion.getEnd_date()) || stockManager.getPromotionQuantityByName(shoppingCart.getKey()) == 0) {
+                continue;
+            }
+            validatePromotions(shoppingCart, products, null);
         }
     }
 
