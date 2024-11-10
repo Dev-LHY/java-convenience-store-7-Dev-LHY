@@ -2,9 +2,11 @@ package store.controller;
 
 import java.util.List;
 import java.util.Map;
+import store.model.Customer;
 import store.model.Product;
 import store.model.Promotion;
 import store.model.StockManager;
+import store.service.ConvenienceStoreService;
 import store.util.TextFileLoader;
 import store.view.InputView;
 import store.view.OutputView;
@@ -29,6 +31,15 @@ public class ConvenienceStoreController {
         outputView.welcome();
         Map<String, List<Product>> stock = stockManager.getStock();
         outputView.stock(stock);
+    }
+
+    private void receipt(ConvenienceStoreService csService, Customer customer) {
+        outputView.purchaseAmount(customer.getShoppingCart());
+        outputView.promotionAmount(csService.getPromotionDiscount());
+        outputView.totalAmountInformation(csService.getPurchaseInformation());
+        outputView.promotionDiscountAmount(csService.getPromotionDiscountAmount());
+        outputView.memberShipDiscount(csService.getMembershipDiscountAmount());
+        outputView.actualAmount(csService.getActualAmount());
     }
 }
 
