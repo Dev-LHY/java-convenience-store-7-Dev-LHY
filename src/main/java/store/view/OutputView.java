@@ -36,7 +36,9 @@ public class OutputView {
             if (promotion == null) {
                 promotion = "";
             }
-            System.out.println("- " + product.getName() + " " + formatter.format(product.getPrice()) + "원 " + quantity + " " + promotion);
+            System.out.println(
+                    "- " + product.getName() + " " + formatter.format(product.getPrice()) + "원 " + quantity + " "
+                            + promotion);
         }
     }
 
