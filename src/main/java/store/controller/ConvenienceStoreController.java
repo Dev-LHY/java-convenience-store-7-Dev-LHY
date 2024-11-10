@@ -1,5 +1,6 @@
 package store.controller;
 
+import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.Map;
 import store.model.Customer;
@@ -42,10 +43,10 @@ public class ConvenienceStoreController {
         outputView.welcome();
         Map<String, List<Product>> stock = stockManager.getStock();
         outputView.stock(stock);
+        outputView.inputProductNameAndQuantity();
     }
 
     private void process() {
-        outputView.inputProductNameAndQuantity();
         Customer customer = new Customer(inputView.inputProduct());
         ConvenienceStoreService csService = new ConvenienceStoreService(customer);
         csService.checkQuantity();
@@ -75,7 +76,7 @@ public class ConvenienceStoreController {
             try {
                 action.run();
                 break;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | NullPointerException e) {
                 System.out.println(e.getMessage());
             }
         }
