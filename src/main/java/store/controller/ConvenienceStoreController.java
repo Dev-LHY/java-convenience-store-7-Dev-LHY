@@ -33,6 +33,18 @@ public class ConvenienceStoreController {
         outputView.stock(stock);
     }
 
+    private void process() {
+        outputView.inputProductNameAndQuantity();
+        Customer customer = new Customer(inputView.inputProduct());
+        ConvenienceStoreService csService = new ConvenienceStoreService(customer);
+        csService.checkQuantity();
+        csService.validatePromotion();
+        outputView.askMembership();
+        csService.askMembership(inputView.isY());
+        receipt(csService, customer);
+        csService.updateStock();
+    }
+
     private void receipt(ConvenienceStoreService csService, Customer customer) {
         outputView.purchaseAmount(customer.getShoppingCart());
         outputView.promotionAmount(csService.getPromotionDiscount());
