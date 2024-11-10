@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import store.model.Product;
 import store.model.ProductPrice;
 
 public class OutputView {
@@ -15,6 +16,28 @@ public class OutputView {
 
     public void inputProductNameAndQuantity() {
         System.out.println(OutputMessage.INPUT_PRODUCT_NAME_AND_QUANTITY.getMessage());
+    }
+
+    public void stock(Map<String, List<Product>> stock) {
+        for (Map.Entry<String, List<Product>> stockEntry : stock.entrySet()) {
+            List<Product> products = stockEntry.getValue();
+            printStock(products);
+        }
+        System.out.print(System.lineSeparator());
+    }
+
+    private void printStock(List<Product> products) {
+        for (Product product : products) {
+            String quantity = Integer.toString(product.getQuantity()) + "개";
+            if (quantity.equals("0개")) {
+                quantity = "재고 없음";
+            }
+            String promotion = product.getPromotion();
+            if (promotion == null) {
+                promotion = "";
+            }
+            System.out.println("- " + product.getName() + " " + formatter.format(product.getPrice()) + "원 " + quantity + " " + promotion);
+        }
     }
 
     public void askMembership() {
