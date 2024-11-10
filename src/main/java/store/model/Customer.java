@@ -37,9 +37,24 @@ public class Customer {
         List<String> parseItems = parseItems(items);
         for (String item : parseItems) {
             String[] splitItem = item.split(DELIMITER_DASH);
+            validateSplitItemSize(splitItem);
             String name = splitItem[NAME_INDEX];
+            validateQuantity(splitItem, name);
+        }
+    }
+
+    private void validateQuantity(String[] splitItem, String name) {
+        try {
             int quantity = Integer.parseInt(splitItem[QUANTITY_INDEX]);
             shoppingCart.put(name, quantity);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT.getMessage());
+        }
+    }
+
+    private void validateSplitItemSize(String[] splitItem) {
+        if (splitItem.length != 2) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT.getMessage());
         }
     }
 
