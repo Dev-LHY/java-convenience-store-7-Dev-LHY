@@ -56,7 +56,8 @@ public class ConvenienceStoreService {
         int totalAmount = 0;
         Map<String, Integer> promotionDiscount = getPromotionDiscount();
         for (Map.Entry<String, Integer> promotionDiscountEntry : promotionDiscount.entrySet()) {
-            totalAmount += ProductPrice.getPriceByName(promotionDiscountEntry.getKey()) * promotionDiscountEntry.getValue();
+            totalAmount +=
+                    ProductPrice.getPriceByName(promotionDiscountEntry.getKey()) * promotionDiscountEntry.getValue();
         }
         return totalAmount;
     }
@@ -65,7 +66,7 @@ public class ConvenienceStoreService {
         if (isMembership) {
             List<Integer> totalAmount = getPurchaseInformation();
             int promotionDiscountAmount = getPromotionDiscountAmount();
-            this.membershipDiscount =  (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.3);
+            this.membershipDiscount = (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.3);
         }
         if (!isMembership) {
             this.membershipDiscount = 0;
@@ -106,7 +107,8 @@ public class ConvenienceStoreService {
             if (promotion == null) {
                 continue;
             }
-            if (checkPromotionTime(promotion.getStart_date(), promotion.getEnd_date()) || stockManager.getPromotionQuantityByName(shoppingCart.getKey()) == 0) {
+            if (checkPromotionTime(promotion.getStart_date(), promotion.getEnd_date())
+                    || stockManager.getPromotionQuantityByName(shoppingCart.getKey()) == 0) {
                 continue;
             }
             validatePromotions(shoppingCart, products, null);
@@ -136,7 +138,7 @@ public class ConvenienceStoreService {
     }
 
     private void askPlusQuantity(Entry<String, Integer> shoppingCart, int result, int divide) {
-        if (shoppingCart.getValue() % divide == divide -1) {
+        if (shoppingCart.getValue() % divide == divide - 1) {
             outputView.addPromotionProduct(shoppingCart.getKey(), 1);
             if (inputView.isY()) {
                 customer.addQuantity(shoppingCart.getKey());
