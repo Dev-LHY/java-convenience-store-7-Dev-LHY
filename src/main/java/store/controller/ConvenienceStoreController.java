@@ -23,6 +23,7 @@ public class ConvenienceStoreController {
             welcome();
             retryIfErrorOccur(this::process);
             if (repurchase()) {
+                stockManager.reset();
                 return;
             }
         }
