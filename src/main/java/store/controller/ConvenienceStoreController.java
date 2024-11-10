@@ -1,6 +1,5 @@
 package store.controller;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.Map;
 import store.model.Customer;
@@ -83,5 +82,3 @@ public class ConvenienceStoreController {
         }
     }
 }
-
-
