@@ -113,6 +113,11 @@ public class StockManager {
         }
     }
 
+    public void reset() {
+        stock.clear();
+        promotions.clear();
+    }
+
     @Override
     public String toString() {
         return "StockManager{" +
