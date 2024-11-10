@@ -54,6 +54,11 @@ public class ConvenienceStoreController {
         outputView.actualAmount(csService.getActualAmount());
     }
 
+    private boolean repurchase() {
+        outputView.askRepurchase();
+        return inputView.isN();
+    }
+
     private void retryIfErrorOccur(Runnable action) {
         while (true) {
             try {
@@ -64,7 +69,6 @@ public class ConvenienceStoreController {
             }
         }
     }
-
 }
 
 
