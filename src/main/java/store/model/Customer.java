@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import store.exception.ExceptionMessage;
 
 public class Customer {
     private static final String REGEX = "\\[(.*?)]";
@@ -43,13 +44,22 @@ public class Customer {
     }
 
     private List<String> parseItems(String items) {
+        List<String> parseItems = new ArrayList<>();
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(items);
-        List<String> parseItems = new ArrayList<>();
+        boolean found = false;
         while (matcher.find()) {
             parseItems.add(matcher.group(1));
+            found = true;
         }
+        validateInput(found);
         return parseItems;
+    }
+
+    private void validateInput(boolean found) {
+        if (!found) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT.getMessage());
+        }
     }
 
     @Override
