@@ -11,7 +11,7 @@ public class OutputView {
     private final DecimalFormat formatter = new DecimalFormat("###,###");
 
     public void welcome() {
-        System.out.println(OutputMessage.WELCOME.getMessage());
+        System.out.println(System.lineSeparator() + OutputMessage.WELCOME.getMessage());
     }
 
     public void inputProductNameAndQuantity() {
@@ -60,13 +60,13 @@ public class OutputView {
 
     public void purchaseAmount(Map<String, Integer> shoppingCart) {
         System.out.println("===============W 편의점===============");
-        System.out.printf(leftAlign("상품명", 22) + leftAlign("수량", 10) + leftAlign("금액", 10) + "\n");
+        System.out.printf(leftAlign("상품명", 22) + leftAlign("수량", 10) + leftAlign("금액", 10) + System.lineSeparator());
         for (Entry<String, Integer> shoppingCartEntry : shoppingCart.entrySet()) {
             String productName = shoppingCartEntry.getKey();
             int quantity = shoppingCartEntry.getValue();
             int price = shoppingCartEntry.getValue() * ProductPrice.getPriceByName(productName);
             System.out.printf(leftAlign(productName, 22) + leftAlign(Integer.toString(quantity), 10) + rightAlign(
-                    formatter.format(price), 1) + "\n");
+                    formatter.format(price), 1) + System.lineSeparator());
         }
     }
 
@@ -75,7 +75,8 @@ public class OutputView {
         for (Entry<String, Integer> promotionDiscountEntry : promotionDiscount.entrySet()) {
             String productName = promotionDiscountEntry.getKey();
             int quantity = promotionDiscountEntry.getValue();
-            System.out.printf(leftAlign(productName, 22) + leftAlign(Integer.toString(quantity), 10) + "\n");
+            System.out.printf(
+                    leftAlign(productName, 22) + leftAlign(Integer.toString(quantity), 10) + System.lineSeparator());
         }
     }
 
@@ -83,19 +84,22 @@ public class OutputView {
         System.out.println("======================================");
         System.out.printf(leftAlign("총구매액", 22) +
                 leftAlign(Integer.toString(purchaseInformation.get(0)), 10) +
-                rightAlign(formatter.format(purchaseInformation.get(1)), 1) + "\n");
+                rightAlign(formatter.format(purchaseInformation.get(1)), 1) + System.lineSeparator());
     }
 
     public void promotionDiscountAmount(int amount) {
-        System.out.printf(leftAlign("행사할인", 32) + "-" + rightAlign(formatter.format(amount), 1) + "\n");
+        System.out.printf(
+                leftAlign("행사할인", 32) + "-" + rightAlign(formatter.format(amount), 1) + System.lineSeparator());
     }
 
     public void memberShipDiscount(int amount) {
-        System.out.printf(leftAlign("멤버십할인", 32) + "-" + rightAlign(formatter.format(amount), 1) + "\n");
+        System.out.printf(
+                leftAlign("멤버십할인", 32) + "-" + rightAlign(formatter.format(amount), 1) + System.lineSeparator());
     }
 
     public void actualAmount(int amount) {
-        System.out.printf(leftAlign("내실돈", 33) + rightAlign(formatter.format(amount), 1) + "\n");
+        System.out.printf(leftAlign("내실돈", 33) + rightAlign(formatter.format(amount), 1) + System.lineSeparator()
+                + System.lineSeparator());
     }
 
     private static int getKorCnt(String kor) {
