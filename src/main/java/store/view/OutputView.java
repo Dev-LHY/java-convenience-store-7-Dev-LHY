@@ -43,23 +43,26 @@ public class OutputView {
     }
 
     public void askMembership() {
-        System.out.println(OutputMessage.ASK_MEMBERSHIP.getMessage());
+        System.out.println(System.lineSeparator() + OutputMessage.ASK_MEMBERSHIP.getMessage());
     }
 
     public void askRepurchase() {
-        System.out.println(OutputMessage.ASK_REPURCHASE.getMessage());
+        System.out.println(System.lineSeparator() + OutputMessage.ASK_REPURCHASE.getMessage());
     }
 
     public void promotionNotApplySomething(String name, int number) {
-        System.out.println(OutputMessage.PROMOTION_NOT_APPLY_SOMETHING.getFormattedMessage(name, number));
+        System.out.println(
+                System.lineSeparator() + OutputMessage.PROMOTION_NOT_APPLY_SOMETHING.getFormattedMessage(name, number));
     }
 
     public void addPromotionProduct(String name, int number) {
-        System.out.println(OutputMessage.ADD_PROMOTION_PRODUCT.getFormattedMessage(name, number));
+        System.out.println(
+                System.lineSeparator() + OutputMessage.ADD_PROMOTION_PRODUCT.getFormattedMessage(name, number));
     }
 
     public void purchaseAmount(Map<String, Integer> shoppingCart) {
-        System.out.println("===============W 편의점===============");
+        System.out.println();
+        System.out.println("===============W 편의점================");
         System.out.printf(leftAlign("상품명", 22) + leftAlign("수량", 10) + leftAlign("금액", 10) + System.lineSeparator());
         for (Entry<String, Integer> shoppingCartEntry : shoppingCart.entrySet()) {
             String productName = shoppingCartEntry.getKey();
@@ -71,7 +74,7 @@ public class OutputView {
     }
 
     public void promotionAmount(Map<String, Integer> promotionDiscount) {
-        System.out.println("===============증\t 정===============");
+        System.out.println("===============증\t 정================");
         for (Entry<String, Integer> promotionDiscountEntry : promotionDiscount.entrySet()) {
             String productName = promotionDiscountEntry.getKey();
             int quantity = promotionDiscountEntry.getValue();
@@ -81,7 +84,7 @@ public class OutputView {
     }
 
     public void totalAmountInformation(List<Integer> purchaseInformation) {
-        System.out.println("======================================");
+        System.out.println("=======================================");
         System.out.printf(leftAlign("총구매액", 22) +
                 leftAlign(Integer.toString(purchaseInformation.get(0)), 10) +
                 rightAlign(formatter.format(purchaseInformation.get(1)), 1) + System.lineSeparator());
@@ -98,8 +101,7 @@ public class OutputView {
     }
 
     public void actualAmount(int amount) {
-        System.out.printf(leftAlign("내실돈", 33) + rightAlign(formatter.format(amount), 1) + System.lineSeparator()
-                + System.lineSeparator());
+        System.out.printf(leftAlign("내실돈", 33) + rightAlign(formatter.format(amount), 1) + System.lineSeparator());
     }
 
     private static int getKorCnt(String kor) {
