@@ -24,6 +24,7 @@ public class ConvenienceStoreService {
     private final OutputView outputView = new OutputView();
     private final InputView inputView = new InputView();
     private final Map<String, Integer> promotionDiscount = new LinkedHashMap<>();
+    private final Map<String, Integer> promotionDiscountAmount = new LinkedHashMap<>();
     private int membershipDiscount;
 
     public ConvenienceStoreService(Customer customer) {
@@ -62,10 +63,42 @@ public class ConvenienceStoreService {
         return totalAmount;
     }
 
+    public int getMemberShipDiscount() {
+        int totalAmount = 0;
+        Map<String, Integer> promotionDiscount = getPromotionDiscount();
+        for (Map.Entry<String, Integer> promotionDiscountEntry : promotionDiscount.entrySet()) {
+            int promotionQuantity =
+                    promotionDiscountEntry.getValue() * promotionDiscountAmount.get(promotionDiscountEntry.getKey());
+            totalAmount = applyPromotionWithoutExceeding(promotionDiscountEntry, promotionQuantity, totalAmount);
+            totalAmount = applyPromotionWithExcessItems(promotionDiscountEntry, promotionQuantity, totalAmount);
+        }
+        return totalAmount;
+    }
+
+    private int applyPromotionWithoutExceeding(Entry<String, Integer> promotionDiscountEntry, int promotionQuantity,
+                                               int totalAmount) {
+        if (shoppingCart.get(promotionDiscountEntry.getKey()) - promotionQuantity == 0) {
+            totalAmount += promotionQuantity * ProductPrice.getPriceByName(
+                    promotionDiscountEntry.getKey());
+        }
+        return totalAmount;
+    }
+
+    private int applyPromotionWithExcessItems(Entry<String, Integer> promotionDiscountEntry, int promotionQuantity,
+                                              int totalAmount) {
+        if (shoppingCart.get(promotionDiscountEntry.getKey()) - promotionQuantity > 0) {
+            totalAmount +=
+                    (shoppingCart.get(promotionDiscountEntry.getKey()) - promotionQuantity)
+                            * ProductPrice.getPriceByName(
+                            promotionDiscountEntry.getKey());
+        }
+        return totalAmount;
+    }
+
     public void askMembership(boolean isMembership) {
         if (isMembership) {
             List<Integer> totalAmount = getPurchaseInformation();
-            int promotionDiscountAmount = getPromotionDiscountAmount();
+            int promotionDiscountAmount = getMemberShipDiscount();
             this.membershipDiscount = (int) ((totalAmount.get(1) - promotionDiscountAmount) * 0.3);
         }
         if (!isMembership) {
@@ -82,7 +115,7 @@ public class ConvenienceStoreService {
 
     public int getActualAmount() {
         List<Integer> totalAmount = getPurchaseInformation();
-        return totalAmount.get(1) - getMembershipDiscountAmount() - getPromotionDiscountAmount();
+        return totalAmount.get(1) - getPromotionDiscountAmount() - getMembershipDiscountAmount();
     }
 
     public Map<String, Integer> getPromotionDiscount() {
@@ -121,6 +154,7 @@ public class ConvenienceStoreService {
         int normalQuantity = promotionQuantity - shoppingCart.getValue();
         promotionName = getPromotionName(promotionName, products);
         int divide = getDivide(promotionName);
+        promotionDiscountAmount.put(shoppingCart.getKey(), divide);
         getRemainder(shoppingCart, normalQuantity, promotionQuantity, divide);
     }
 
