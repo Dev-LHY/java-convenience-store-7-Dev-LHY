@@ -43,7 +43,7 @@ public class StockManager {
         for (Product product : products) {
             int productQuantity = product.getQuantity();
             if (productQuantity >= shoppingCartQuantity) {
-                product.setQuantity(product.getQuantity() - productQuantity);
+                product.setQuantity(product.getQuantity() - shoppingCartQuantity);
                 break;
             }
             shoppingCartQuantity -= product.getQuantity();
